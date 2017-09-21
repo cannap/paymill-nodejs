@@ -1,22 +1,26 @@
 {
-  "name": "paymill-wrap",
-  "version": "1.0.0",
+  "name": "paymill-nodejs",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "test": "ava tests/*.js --verbose",
-    "test:watch": "ava tests/*.js --verbose --watch",
+    "test": "nyc ava tests/*.test.js --verbose",
+    "test:watch": "ava tests/*.test.js --verbose --watch",
     "ava": "ava --verbose"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "global-request-logger": "^0.1.1",
+    "qs": "^6.5.1"
+  },
   "devDependencies": {
     "ava": "^0.22.0",
     "babel-register": "^6.26.0",
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "nyc": "^11.2.1"
   },
   "ava": {},
   "babel": "inherit"

@@ -1,27 +1,9 @@
-const { generateAuthString } = require('./utils')
+const Config = require('./config')
 
-const methods = {
-  // Chechksums: require('./resources/Checksums')
-}
+const PayMillGateway = require('./resources/PaymillGateway')
+let init = config => new PayMillGateway(Config(config))
 
-// require('./http') //
-
-class Paymill {
-  constructor (apiKey) {
-    this.auth = generateAuthString(apiKey)
-    this._prepMethods()
-  }
-
-  _request (method, data) {}
-
-  _prepMethods () {
-    for (var name in methods) {
-      this[name[0].toLowerCase() + name.substring(1)] = new methods[name](this)
-    }
-  }
-}
-Paymill.resource = require('./http')
-var paymill = new Paymill()
-
-/// console.log('create', paymill.chechksums.create())
-module.exports = Paymill
+module.exports = {
+  init
+} //
+//
