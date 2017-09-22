@@ -31,15 +31,18 @@ class Http {
     return this._request('POST', url, body)
   }
   get (url) {
-    this._request('GET', url)
+    return this._request('GET', url)
   }
   delete (url) {
-    this._request('DELETE', url)
+    return this._request('DELETE', url)
+  }
+  put (url, body) {
+    return this._request('PUT', url, body)
   }
 
   _request (method, url, body = false) {
     const requestBody = qs.stringify(body, { encode: false })
-    let options = {
+    const options = {
       headers: this._headers(),
       method,
       port: 443,
@@ -59,16 +62,14 @@ class Http {
         })
 
         response.on('end', () => {
-          let buffer = Buffer.concat(chunks)
-          let finalResponse = JSON.parse(buffer.toString('utf-8'))
-          let error = this.httpStatusCheck(response.statusCode)
-          console.log(response.statusCode)
+          const buffer = Buffer.concat(chunks)
+          const finalResponse = JSON.parse(buffer.toString('utf-8'))
+          const error = this.httpStatusCheck(response.statusCode)
 
           if (error) {
             reject(finalResponse.error)
             return
           }
-
           resolve(finalResponse.data)
         })
 
@@ -87,7 +88,8 @@ class Http {
   _headers () {
     return {
       Authorization: `Basic ${generateAuthString(this.config.authKey)}`,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'text/csv'
     }
   }
 }
