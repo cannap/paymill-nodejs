@@ -5,7 +5,11 @@ class Checksums extends Gateway {
     super()
     this.gateway = gateway
   }
-  create (content) {
+  create (content, addShipping = false) {
+    if (addShipping) {
+      content.shipping_address = content.billing_address
+    }
+
     return this.gateway.http.post('checksums', content)
   }
 }
