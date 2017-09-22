@@ -20,8 +20,6 @@ test('create checksum with billing address', async t => {
   } catch (error) {
     t.fail(error)
   }
-
-  // console.log(resultWithClient)
 })
 
 test('create checksum with shipping as billing address', async t => {
