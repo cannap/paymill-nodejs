@@ -12,6 +12,6 @@ class PaymillGateway {
     this.transactions = new TransactionsGateway(this)
     this.clients = new ClientsGateway(this)
   }
-} //
+}
 
 module.exports = PaymillGateway
