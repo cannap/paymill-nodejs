@@ -41,7 +41,6 @@ test('create checksum error with missing field', async t => {
     await gateway.checksums.create(transaction)
     t.fail()
   } catch (error) {
-    console.log(error)
-    // t.is('Parameter is mandatory', error.messages.required)
+    t.is('Parameter is mandatory', error.messages.required)
   }
 })
