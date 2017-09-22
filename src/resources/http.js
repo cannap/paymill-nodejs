@@ -10,15 +10,10 @@ class Http {
   }
 
   httpStatusCheck (status) {
-    /*
-    200	OK	Great, go ahead.
-    401	Unauthorized	Jim, You have to provide your private API Key.
-    403	Transaction Error	Transaction could not be completed, please check your payment data.
-    404	Not Found	There is no entity with this identifier, did you use the right one?
-    412	Precondition Failed	I guess you're missing at least one required parameter?
-    5xx	Server Error	Doh, we did something wrong :/
-    */
+    // Todo: when growing move in other file
     switch (status.toString()) {
+      case '400':
+        return exceptions.BadRequest('Bad Request')
       case '401':
         return exceptions('Unauthorized')
       case '403':
@@ -43,7 +38,7 @@ class Http {
   }
 
   _request (method, url, body = false) {
-    const requestBody = qs.stringify(body)
+    const requestBody = qs.stringify(body, { encode: false })
     let options = {
       headers: this._headers(),
       method,
@@ -65,9 +60,9 @@ class Http {
 
         response.on('end', () => {
           let buffer = Buffer.concat(chunks)
-
           let finalResponse = JSON.parse(buffer.toString('utf-8'))
           let error = this.httpStatusCheck(response.statusCode)
+          console.log(response.statusCode)
 
           if (error) {
             reject(finalResponse.error)
@@ -90,8 +85,6 @@ class Http {
   }
 
   _headers () {
-    // console.log(generateAuth(this.config.authKey))
-
     return {
       Authorization: `Basic ${generateAuthString(this.config.authKey)}`,
       'Content-Type': 'application/x-www-form-urlencoded'
