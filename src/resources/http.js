@@ -2,7 +2,7 @@ const client = require('https')
 const qs = require('qs')
 const { generateAuthString } = require('../utils')
 const Buffer = require('buffer').Buffer
-const exceptions = require('./exceptions')
+const errors = require('./Errors')
 
 class Http {
   constructor (config) {
@@ -13,17 +13,17 @@ class Http {
     // Todo: when growing move in other file
     switch (status.toString()) {
       case '400':
-        return exceptions.BadRequest('Bad Request')
+        return errors.BadRequest
       case '401':
-        return exceptions.Unauthorized('Unauthorized')
+        return errors.Unauthorized
       case '403':
-        return exceptions.TransactionError('Transaction Error')
+        return errors.TransactionError
       case '404':
-        return exceptions.NotFound('Not Found')
+        return errors.NotFound
       case '412':
-        return exceptions.PreconditionFailed('Precondition Failed')
+        return errors.PreconditionFailed
       case '512':
-        return exceptions.UnexpectedError('Internal Server Error')
+        return errors.UnexpectedError
     }
   }
 
@@ -60,14 +60,12 @@ class Http {
         response.on('data', responseBody => {
           chunks.push(responseBody)
         })
-
         response.on('end', () => {
           const buffer = Buffer.concat(chunks)
           const finalResponse = JSON.parse(buffer.toString('utf-8'))
           const error = this.httpStatusCheck(response.statusCode)
-
           if (error) {
-            reject(finalResponse.error)
+            reject(error)
             return
           }
           resolve(finalResponse.data)

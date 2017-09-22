@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "error": "^7.0.2",
     "global-request-logger": "^0.1.1",
     "qs": "^6.5.1"
   },
