@@ -1,16 +1,16 @@
-const Gateway = require('./Gateway')
+const Service = require('./Service')
 
-class Checksums extends Gateway {
-  constructor (gateway) {
+class Checksums extends Service {
+  constructor (service) {
     super()
-    this.gateway = gateway
+    this.service = service
   }
   create (content, addShipping = false) {
     if (addShipping) {
       content.shipping_address = content.billing_address
     }
 
-    return this.gateway.http.post('checksums', content)
+    return this.service.http.post('checksums', content)
   }
 }
 

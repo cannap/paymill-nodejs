@@ -1,7 +1,7 @@
 const Config = require('./config')
-const PayMillGateway = require('./resources/PaymillGateway')
+const PayMillService = require('./services/PaymillService')
 
-let init = config => new PayMillGateway(Config(config))
+let init = config => new PayMillService(Config(config))
 
 module.exports = {
   init
