@@ -51,3 +51,9 @@ test('http put', async t => {
   })
   t.is(updatedClient.email, 'new@email.com')
 })
+
+test('HTTP ERROR', t => {
+  // Todo: no idea how to check t.throws
+  const error = http.httpStatusCheck(404)
+  t.regex(error.message, /Not Found/)
+})

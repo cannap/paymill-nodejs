@@ -15,9 +15,9 @@ class Http {
       case '400':
         return exceptions.BadRequest('Bad Request')
       case '401':
-        return exceptions('Unauthorized')
+        return exceptions.Unauthorized('Unauthorized')
       case '403':
-        return exceptions('Transaction Error')
+        return exceptions.TransactionError('Transaction Error')
       case '404':
         return exceptions.NotFound('Not Found')
       case '412':

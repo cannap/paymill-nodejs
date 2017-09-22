@@ -1,5 +1,9 @@
 const paymill = require('../src')
 
+const authKey = '78a89e6426abe79f820566c0ca0e128f'
+
+module.exports.authKey = authKey
+
 module.exports.gateway = paymill.init({
   authKey: '78a89e6426abe79f820566c0ca0e128f'
 })
