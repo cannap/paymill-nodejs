@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "play": "nodemon play/play.js",
-    "test": "nyc ava tests/*.test.js",
     "test:watch": "ava tests/*.test.js --verbose --watch",
     "ava": "ava --verbose",
-    "generateToken": "testcafe chrome:headless tests/testcafe/bridge.js"
+    "generateToken": "node tests/bridge/index.js",
+    "test": "npm run generateToken && nyc ava tests/*.test.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "babel-register": "^6.26.0",
     "event-to-promise": "^0.8.0",
     "finalhandler": "^1.0.6",
+    "get-port": "^3.2.0",
     "nodemon": "^1.12.1",
     "npm-run": "^4.1.2",
     "nyc": "^11.2.1",

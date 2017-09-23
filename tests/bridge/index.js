@@ -3,6 +3,7 @@ var finalhandler = require('finalhandler')
 var serveStatic = require('serve-static')
 var HeadlessChrome = require('simple-headless-chrome')
 // Serve up public/ftp folder
+
 var serve = serveStatic(__dirname)
 var { join } = require('path')
 const { promisify } = require('util')
@@ -12,17 +13,18 @@ const writeFile = promisify(require('fs').writeFile)
 var server = http.createServer(function onRequest (req, res) {
   serve(req, res, finalhandler(req, res))
 })
+
 server.listen(8080)
 
 const browser = new HeadlessChrome({
-  headless: true
+  headless: false
 })
 async function createToken () {
+  console.log('Generate Token')
   await browser.init()
   const mainTab = await browser.newTab({ privateTab: false })
 
   await mainTab.goTo('localhost:8080/index.html')
-
   await mainTab.wait(2000)
   const frames = await mainTab.getFrames()
   const frameId = frames[1]
@@ -32,7 +34,7 @@ async function createToken () {
   await mainTab.fill('#pm-exp-month', '10', frameId.id)
   await mainTab.fill('#pm-exp-year', '2020', frameId.id) //
   await mainTab.click('#submit-form')
-  await mainTab.wait(3000)
+  await mainTab.wait(1000)
   const location = await mainTab.evaluate(function (selector) {
     const selectorHtml = document.getElementById('tokenval')
     return selectorHtml.innerText
@@ -41,6 +43,7 @@ async function createToken () {
   await writeFile(join(__dirname, 'token.txt'), location.result.value, {
     ecoding: 'utf-8'
   })
+  process.exit(0)
 }
 
 createToken()
