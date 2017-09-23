@@ -5,23 +5,30 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "test": "nyc ava tests/*.test.js --verbose",
+    "play": "nodemon play/play.js",
+    "test": "nyc ava tests/*.test.js",
     "test:watch": "ava tests/*.test.js --verbose --watch",
-    "ava": "ava --verbose"
+    "ava": "ava --verbose",
+    "generateToken": "testcafe chrome:headless tests/testcafe/bridge.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "error": "^7.0.2",
-    "global-request-logger": "^0.1.1",
     "qs": "^6.5.1"
   },
   "devDependencies": {
     "ava": "^0.22.0",
     "babel-register": "^6.26.0",
+    "event-to-promise": "^0.8.0",
+    "finalhandler": "^1.0.6",
     "nodemon": "^1.12.1",
-    "nyc": "^11.2.1"
+    "npm-run": "^4.1.2",
+    "nyc": "^11.2.1",
+    "puppeteer": "^0.11.0",
+    "serve-static": "^1.12.6",
+    "simple-headless-chrome": "^4.3.10"
   },
   "ava": {},
   "babel": "inherit"
