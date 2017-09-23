@@ -9,7 +9,7 @@
     "test:watch": "ava tests/*.test.js --verbose --watch",
     "ava": "ava --verbose",
     "generateToken": "node tests/bridge/index.js",
-    "test": "npm run generateToken && nyc ava tests/*.test.js"
+    "test": "nyc ava tests/*.test.js"
   },
   "keywords": [],
   "author": "",
