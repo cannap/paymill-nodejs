@@ -29,8 +29,8 @@ exports.createToken = async function () {
 }
 
 module.exports.transactionWithBilling = {
-  amount: 100,
-  currency: 'eur',
+  amount: 10,
+  currency: 'EUR',
   checksum_type: 'paypal',
   country: 'DE', //
   return_url: 'https://www.example.com/store/checkout/result',
@@ -38,11 +38,9 @@ module.exports.transactionWithBilling = {
   billing_address: {
     name: 'Max Mustermann',
     street_address: 'Musterstr. 1',
-    street_address_addition: 'nothibng',
     city: 'Munich',
     state: 'Bavaria',
     postal_code: '80333',
-    country: 'DE',
-    phone: '+4989123456'
+    country: 'DE'
   }
 }

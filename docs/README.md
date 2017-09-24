@@ -14,9 +14,14 @@ const pm = paymill.init({
 })
 
 ``` 
-
 ## Checksums
 ### Create
+Creates a new Checksum
+
+| Param                | Type   |
+|----------------------|--------|
+| data                 | Object |
+| useBillingAsShipping | Bool   |
 
 ```js
 const result = await pm.checksums.create({
@@ -28,7 +33,7 @@ const result = await pm.checksums.create({
   cancel_url: 'https://www.example.com/store/checkout/retry')
 })
 ```
-For Paypyal:
+For Paypal:
 ```js
 const result = await pm.checksums.create({
   amount: 100,
@@ -40,7 +45,6 @@ const result = await pm.checksums.create({
 
 ```
 For Sofort:
-
 ```js
 const result = await pm.checksums.create({
   amount: 100,

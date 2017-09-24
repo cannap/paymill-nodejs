@@ -64,6 +64,7 @@ class Http {
           const buffer = Buffer.concat(chunks)
           const finalResponse = JSON.parse(buffer.toString('utf-8'))
           const error = this.httpStatusCheck(response.statusCode)
+
           if (error) {
             reject(error)
             return

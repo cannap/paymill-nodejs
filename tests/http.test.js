@@ -10,7 +10,7 @@ const defaultConfig = {
 
 const http = new Http(defaultConfig)
 
-test('http get', async t => {
+test('get', async t => {
   try {
     const result = await http.get('clients')
     t.regex(result[0]['id'], /client/)
@@ -19,7 +19,7 @@ test('http get', async t => {
   }
 })
 
-test('http post', async t => {
+test('post', async t => {
   try {
     const result = await http.post('clients', {
       email: 'emaile@mail.com',
@@ -40,7 +40,7 @@ test('http delete', async t => {
   t.is(result, null)
 })
 
-test('http put', async t => {
+test('put', async t => {
   const client = await http.post('clients', {
     email: 'emaile@mail.com',
     description: 'never pays his bills'
