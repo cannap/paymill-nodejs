@@ -16,7 +16,6 @@ test('create', async t => {
 test('update', async t => {
   const email = chance.email()
   const email2 = chance.email()
-
   const client = await gateway.clients.create({
     email,
     description: 'Some description'
@@ -49,20 +48,9 @@ test('delete', async t => {
   t.is(result, null)
 })
 
-test('list', async t => {
-  const client = await gateway.clients.create({
-    email: chance.email(),
-    description: 'Some description'
-  })
-
-  const clientList = await gateway.clients.list()
-
-  t.is(typeof clientList[0], 'object')
-})
-
 test('export as csv', async t => {
-  const exportedClient = await gateway.clients.export()
-  t.regex(exportedClient, /"client_/)
+  const exportedClient = await gateway.clients.list(true)
+  t.is(typeof exportedClient, 'string')
 })
 
 test('list as object', async t => {

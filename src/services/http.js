@@ -35,10 +35,10 @@ class Http {
   /**
    *
    * @param {Object} request -  Request Object
-   * @param {Object} request.url Request URL
+   * @param {String} request.url Request URL
    * @param {Object} request.body Request body
-   * @param {Object} json Request body
-   * @param {headers} body
+   * @param {Boolean} json Request body
+   * @param {Object} headers
    */
   post (request, headers) {
     return this._request('POST', request, headers)
@@ -46,10 +46,10 @@ class Http {
   /**
    *
    * @param {Object} request -  Request Object
-   * @param {Object} request.url Request URL
+   * @param {String} request.url Request URL
    * @param {Object} request.body Request body
-   * @param {Object} json Request body
-   * @param {headers} body
+   * @param {Boolean} json Request body
+   * @param {Object} headers
    */
   get (request, headers) {
     return this._request('GET', request, headers)
@@ -57,10 +57,10 @@ class Http {
   /**
    *
    * @param {Object} request -  Request Object
-   * @param {Object} request.url Request URL
+   * @param {String} request.url Request URL
    * @param {Object} request.body Request body
-   * @param {Object} json Request body
-   * @param {headers} body
+   * @param {Boolean} request.json Request body
+   * @param {Object} headers
    */
   delete (request, headers) {
     return this._request('DELETE', request, headers)
@@ -68,25 +68,26 @@ class Http {
   /**
    *
    * @param {Object} request -  Request Object
-   * @param {Object} request.url Request URL *
+   * @param {String} request.url Request URL *
    * @param {Object} request.body Request body*
-   * @param {Object} json Request body
-   * @param {headers} body
+   * @param {Boolean} json Request body
+   * @param {Object} headers
    */
   put (request, headers) {
     return this._request('PUT', request, headers)
   }
 
-  _request (method, request, headers) {
-    var jsonOutput = !(typeof request.json !== 'undefined')
-
+  _request (method, request) {
+    var jsonOutput = true
     var tempHeader = Object.assign({}, this.headers)
-    tempHeader = Object.assign(tempHeader, headers)
 
-    jsonOutput || delete tempHeader['Content-Type']
+    tempHeader = Object.assign(tempHeader, request.headers)
+    if (typeof request.json !== 'undefined') {
+      jsonOutput = request.json
+      delete tempHeader['Content-Type']
+    }
 
     const requestBody = qs.stringify(request.body, { encode: false })
-
     const options = {
       headers: tempHeader,
       method,
