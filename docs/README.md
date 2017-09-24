@@ -38,6 +38,7 @@ const result = await pm.checksums.create({
 })
 ```
 **Paypal**
+Creates a Paypal Checksum
 <p class="warning">
 [Paypal Guide](https://developers.paymill.com/guides/paypal/how-to-set-up-paypal.html)
 </p>
@@ -53,6 +54,7 @@ const result = await pm.checksums.create({
 ```
 
 **Sofort**
+Create a Sofort Checksum
 <p class="warning">
 [Sofort Guide](https://developers.paymill.com/guides/sofort/transactions)
 </p>
@@ -74,5 +76,71 @@ const result = await pm.checksums.create({
     country: 'DE'
 }).forSofort()
 ```
+## Clients
+<p class="tip">
+[**Official API Reference**](https://developers.paymill.com/API/index?bash#-client-object)
+</p>
+
+### Create 
+Create a new Client
+
+```js
+const client = await gateway.clients.create({
+    email:'client@example.com',
+    description: 'Some description'
+})
+```
+### Details
+Get details from a Single Client
+
+| Param    | Type   |
+|----------|--------|
+| clientid | String |
+
+```js
+ const clientDetails = await gateway.clients.details('clientId')
+```
+
+
+### Update
+Update a Single Client
+
+| Param    | Type   |
+|----------|--------|
+| clientid | String |
+
+```js
+ const updatedClient = await gateway.clients.update('clientId', {
+    email: 'new-email@example.com',
+    description: 'New Description'
+  })
+```
+
+### Delete
+Delete a Single Client
+
+| Param    | Type   |
+|----------|--------|
+| clientid | String |
+
+```js
+ const updatedClient = await gateway.clients.delete('clientId')
+```
+
 
 ### List
+List Clients
+
+| Param    | Type   |
+|----------|--------|
+| csv | Boolean |
+
+```js
+ const updatedClient = await gateway.clients.list(csv = false)
+```
+
+
+
+
+
+

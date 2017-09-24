@@ -1,4 +1,3 @@
-'use strict'
 const defaultConfig = {
   host: 'api.paymill.com',
   version: 'v2.1',

@@ -1,4 +1,3 @@
-'use strict'
 import Http from '../src/services/http'
 import test from 'ava'
 import { authKey } from './shared'

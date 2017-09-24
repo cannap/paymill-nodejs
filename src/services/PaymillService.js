@@ -1,6 +1,4 @@
-'use strict'
 const Http = require('./http')
-
 const Checksums = require('./Checksums')
 const Clients = require('./Clients')
 const Transactions = require('./Transactions')

@@ -1,4 +1,3 @@
-'use strict'
 const client = require('https')
 const qs = require('qs')
 const generateAuthString = require('../utils').generateAuthString
@@ -8,7 +7,6 @@ const errors = require('./Errors')
 class Http {
   constructor (config) {
     this.config = config
-
     this.headers = {
       Authorization: `Basic ${generateAuthString(this.config.authKey)}`,
       'Content-Type': 'application/x-www-form-urlencoded'

@@ -3,5 +3,3 @@
 # WIP
 
 [Documentation](https://cannap.github.io/paymill-nodejs/)
-
-
