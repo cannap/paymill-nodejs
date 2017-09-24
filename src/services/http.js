@@ -7,6 +7,11 @@ const errors = require('./Errors')
 class Http {
   constructor (config) {
     this.config = config
+
+    this.headers = {
+      Authorization: `Basic ${generateAuthString(this.config.authKey)}`,
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   }
 
   httpStatusCheck (status) {
@@ -27,49 +32,95 @@ class Http {
     }
   }
 
-  post (url, body) {
-    return this._request('POST', url, body)
+  /**
+   *
+   * @param {Object} request -  Request Object
+   * @param {Object} request.url Request URL
+   * @param {Object} request.body Request body
+   * @param {Object} json Request body
+   * @param {headers} body
+   */
+  post (request, headers) {
+    return this._request('POST', request, headers)
   }
-  get (url) {
-    return this._request('GET', url)
+  /**
+   *
+   * @param {Object} request -  Request Object
+   * @param {Object} request.url Request URL
+   * @param {Object} request.body Request body
+   * @param {Object} json Request body
+   * @param {headers} body
+   */
+  get (request, headers) {
+    return this._request('GET', request, headers)
   }
-  delete (url) {
-    return this._request('DELETE', url)
+  /**
+   *
+   * @param {Object} request -  Request Object
+   * @param {Object} request.url Request URL
+   * @param {Object} request.body Request body
+   * @param {Object} json Request body
+   * @param {headers} body
+   */
+  delete (request, headers) {
+    return this._request('DELETE', request, headers)
   }
-  put (url, body) {
-    return this._request('PUT', url, body)
+  /**
+   *
+   * @param {Object} request -  Request Object
+   * @param {Object} request.url Request URL *
+   * @param {Object} request.body Request body*
+   * @param {Object} json Request body
+   * @param {headers} body
+   */
+  put (request, headers) {
+    return this._request('PUT', request, headers)
   }
 
-  _request (method, url, body = false) {
-    const requestBody = qs.stringify(body, { encode: false })
+  _request (method, request, headers) {
+    var jsonOutput = !(typeof request.json !== 'undefined')
+
+    var tempHeader = Object.assign({}, this.headers)
+    tempHeader = Object.assign(tempHeader, headers)
+
+    jsonOutput || delete tempHeader['Content-Type']
+
+    const requestBody = qs.stringify(request.body, { encode: false })
+
     const options = {
-      headers: this._headers(),
+      headers: tempHeader,
       method,
       port: 443,
       host: this.config.host,
-      path: `/${this.config.version}/${url}`
+      path: `/${this.config.version}/${request.url}`
     }
 
-    if (body) {
+    if (request.body) {
       options['Content-Length'] = Buffer.byteLength(requestBody).toString()
     }
-
     return new Promise((resolve, reject) => {
-      const request = client.request(options, response => {
+      const theRequest = client.request(options, response => {
         let chunks = []
         response.on('data', responseBody => {
           chunks.push(responseBody)
         })
         response.on('end', () => {
           const buffer = Buffer.concat(chunks)
-          const finalResponse = JSON.parse(buffer.toString('utf-8'))
-          const error = this.httpStatusCheck(response.statusCode)
-
+          const statusCode = response.statusCode
+          let finalResponse
+          if (jsonOutput) {
+            try {
+              finalResponse = JSON.parse(buffer.toString('utf-8')).data
+            } catch (err) {}
+          } else {
+            finalResponse = buffer.toString('utf-8')
+          }
+          const error = this.httpStatusCheck(statusCode)
           if (error) {
             reject(error)
-            return
           }
-          resolve(finalResponse.data)
+
+          resolve(finalResponse)
         })
 
         response.on('error', err => {
@@ -77,19 +128,11 @@ class Http {
         })
       })
 
-      if (body) {
-        request.write(requestBody)
+      if (request.body) {
+        theRequest.write(requestBody)
       }
-      request.end()
+      theRequest.end()
     })
-  }
-
-  _headers () {
-    return {
-      Authorization: `Basic ${generateAuthString(this.config.authKey)}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'text/csv'
-    }
   }
 }
 

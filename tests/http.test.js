@@ -12,7 +12,7 @@ const http = new Http(defaultConfig)
 
 test('get', async t => {
   try {
-    const result = await http.get('clients')
+    const result = await http.get({ url: 'clients' })
     t.regex(result[0]['id'], /client/)
   } catch (error) {
     t.fail('cant load resposne')
@@ -21,9 +21,12 @@ test('get', async t => {
 
 test('post', async t => {
   try {
-    const result = await http.post('clients', {
-      email: 'emaile@mail.com',
-      description: 'never pays his bills'
+    const result = await http.post({
+      url: 'clients',
+      body: {
+        email: 'emaile@mail.com',
+        description: 'never pays his bills'
+      }
     })
     t.is(result.email, 'emaile@mail.com')
   } catch (error) {
@@ -32,22 +35,29 @@ test('post', async t => {
 })
 
 test('http delete', async t => {
-  const client = await http.post('clients', {
-    email: 'emaile@mail.com',
-    description: 'never pays his bills'
+  const client = await http.post({
+    url: 'clients',
+    body: {
+      email: 'emaile@mail.com',
+      description: 'never pays his bills'
+    }
   })
-  const result = await http.delete(`clients/${client.id}`)
+  const result = await http.delete({ url: `clients/${client.id}` })
   t.is(result, null)
 })
 
 test('put', async t => {
-  const client = await http.post('clients', {
-    email: 'emaile@mail.com',
-    description: 'never pays his bills'
+  const client = await http.post({
+    url: 'clients',
+    body: {
+      email: 'emaile@mail.com',
+      description: 'never pays his bills'
+    }
   })
 
-  const updatedClient = await http.put(`clients/${client.id}`, {
-    email: 'new@email.com'
+  const updatedClient = await http.put({
+    url: `clients/${client.id}`,
+    body: { email: 'new@email.com' }
   })
   t.is(updatedClient.email, 'new@email.com')
 })
