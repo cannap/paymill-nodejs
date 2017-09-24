@@ -7,6 +7,11 @@ class Checksums extends Service {
     this.content = {}
   }
 
+  /**
+   * It Creates a new Transaction
+   * @param {*} content
+   * @param {*} addShipping
+   */
   create (content, addShipping = false) {
     if (addShipping) {
       content.shipping_address = content.billing_address
