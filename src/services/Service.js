@@ -1,4 +1,3 @@
-'use strict'
 class Service {
   filter () {
     console.log(this.content)

@@ -15,6 +15,10 @@ const pm = paymill.init({
 
 ``` 
 ## Checksums
+<p class="tip">
+[**Official Api Reference**](https://developers.paymill.com/API/index#checksums)
+</p>
+
 ### Create
 Creates a new Checksum
 
@@ -33,7 +37,11 @@ const result = await pm.checksums.create({
   cancel_url: 'https://www.example.com/store/checkout/retry')
 })
 ```
-For Paypal:
+**Paypal**
+<p class="warning">
+[Paypal Guide](https://developers.paymill.com/guides/paypal/how-to-set-up-paypal.html)
+</p>
+
 ```js
 const result = await pm.checksums.create({
   amount: 100,
@@ -42,18 +50,29 @@ const result = await pm.checksums.create({
   return_url: 'https://www.example.com/store/checkout/result',
   cancel_url: 'https://www.example.com/store/checkout/retry')
 }).forPaypal()
-
 ```
-For Sofort:
+
+**Sofort**
+<p class="warning">
+[Sofort Guide](https://developers.paymill.com/guides/sofort/transactions)
+</p>
+
 ```js
 const result = await pm.checksums.create({
-  amount: 100,
-  currency: 'eur',
+  amount: 10,
+  currency: 'EUR',
+  customer_email: 'email@example.com', // Not client_email 
   country: 'DE', //
   return_url: 'https://www.example.com/store/checkout/result',
-  cancel_url: 'https://www.example.com/store/checkout/retry')
+  cancel_url: 'https://www.example.com/store/checkout/retry',
+  billing_address: {
+    name: 'Max Mustermann',
+    street_address: 'Musterstr. 1',
+    city: 'Munich',
+    state: 'Bavaria',
+    postal_code: '80333',
+    country: 'DE'
 }).forSofort()
 ```
-
 
 ### List
