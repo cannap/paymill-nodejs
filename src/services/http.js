@@ -1,6 +1,7 @@
+'use strict'
 const client = require('https')
 const qs = require('qs')
-const { generateAuthString } = require('../utils')
+const generateAuthString = require('../utils').generateAuthString
 const Buffer = require('buffer').Buffer
 const errors = require('./Errors')
 

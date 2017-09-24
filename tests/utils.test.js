@@ -1,5 +1,4 @@
 import test from 'ava'
-// { generateAuthString } from '../src/utils'
 var utils = require('../src/utils')
 test('generate base64 auth string', t => {
   const authString = utils.generateAuthString(

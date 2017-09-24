@@ -1,3 +1,4 @@
+'use strict'
 const Service = require('./Service')
 
 class Transactions extends Service {
