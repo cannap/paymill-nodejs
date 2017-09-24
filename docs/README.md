@@ -1,5 +1,5 @@
 # Paymill Api for Nodejs
-Simple Api for Paymill
+Simple API Wrapper for Paymill
 ## Installation
 `` npm install paymill-nodejs ``
 
@@ -16,7 +16,7 @@ const pm = paymill.init({
 ``` 
 ## Checksums
 <p class="tip">
-[**Official Api Reference**](https://developers.paymill.com/API/index#checksums)
+[**Official API Reference**](https://developers.paymill.com/API/index#checksums)
 </p>
 
 ### Create

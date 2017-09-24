@@ -16,10 +16,22 @@
   <div id="app"></div>
   <script src="https://unpkg.com/docute@3/dist/docute.js"></script>
   <script src="https://unpkg.com/docute/plugins/docsearch.js"></script>
+
+
+
   <script>
     docute.init({
       twitter: 'MarkoBolliger',
       repo: 'cannap/paymill-nodejs',
+      plugins: [
+        docsearch({
+          apiKey: '85d380dbfbb8eae796f219ad3e28d680',
+          indexName: 'cannap',
+          // this plugin requires a url too
+          // it indicates where docsearch fetches contents
+          url: 'https://cannap.github.io/paymill-nodejs/#/'
+        })]
+
     })
   </script>
   <!-- Global Site Tag (gtag.js) - Google Analytics -->
