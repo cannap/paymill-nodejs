@@ -36,11 +36,11 @@ class Clients extends Service {
     return this.service.http.delete({ url: `clients/${client}` })
   }
 
+  /**
+   *
+   * @param {Boolean} CSV Export
+   */
   list (csv = false) {
-    if (csv) {
-      console.log(csv ? 'text/csv' : ' fe')
-    }
-
     this.content = {
       url: `clients`,
       json: !csv,
@@ -49,16 +49,6 @@ class Clients extends Service {
     }
     return this.service.http.get(this.content)
   }
-
-  /* export () {
-    return this.service.http.get({
-      url: `clients`,
-      json: false,
-      body: this.content,
-      headers: { Accept: 'text/csv' }
-    })
-  } */
-
   submit () {}
 }
 
