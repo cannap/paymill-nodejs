@@ -9,6 +9,28 @@ test('create checksum', async t => {
   t.true(result.hasOwnProperty('id'))
 })
 
+test('create checksum for paypal', async t => {
+  var test = Object.assign({}, transactionWithBilling)
+  delete test.checksum_type
+
+  const result = await gateway.checksums.create(test).forPaypal()
+  t.is(result.type, 'paypal')
+  t.is(result.action, 'transaction')
+  t.true(result.hasOwnProperty('checksum'))
+  t.true(result.hasOwnProperty('id'))
+})
+
+/*
+test('create checksum for sofort', async t => {
+  var test = Object.assign({}, transactionWithBilling)
+  delete test.checksum_type
+  const result = await gateway.checksums.create(transaction).forSofort()
+  t.is(result.type, 'sofort')
+  t.is(result.action, 'transaction')
+  t.true(result.hasOwnProperty('checksum'))
+  t.true(result.hasOwnProperty('id'))
+}) */
+
 test('create checksum with billing address', async t => {
   try {
     const result = await gateway.checksums.create(transactionWithBilling)
@@ -36,9 +58,11 @@ test('create checksum with shipping as billing address', async t => {
 })
 
 test('create checksum error with missing field', async t => {
-  delete transaction.checksum_type
+  var test = Object.assign({}, transaction)
+
+  delete test.amount
   try {
-    await gateway.checksums.create(transaction)
+    const content = await gateway.checksums.create(test)
     t.fail()
   } catch (error) {
     t.regex(error.title, /Precondition/)

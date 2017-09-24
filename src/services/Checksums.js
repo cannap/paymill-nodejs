@@ -11,7 +11,18 @@ class Checksums extends Service {
     if (addShipping) {
       content.shipping_address = content.billing_address
     }
-
+    if (!content.hasOwnProperty('checksum_type')) {
+      return {
+        forPaypal: () => {
+          content.checksum_type = 'paypal'
+          return this.service.http.post('checksums', content)
+        },
+        forSofort: () => {
+          content.checksum_type = 'sofort'
+          return this.service.http.post('checksums', content)
+        }
+      }
+    }
     return this.service.http.post('checksums', content)
   }
 
