@@ -3,7 +3,7 @@ const qs = require('qs')
 const generateAuthString = require('../utils').generateAuthString
 const Buffer = require('buffer').Buffer
 const errors = require('./Errors')
-
+// Todo: timeout
 class Http {
   constructor (config) {
     this.config = config
@@ -14,7 +14,7 @@ class Http {
   }
 
   httpStatusCheck (status) {
-    // Todo: when growing move in other file
+    // Todo: when growing move in other file and add fucking response
     switch (status.toString()) {
       case '400':
         return errors.BadRequest

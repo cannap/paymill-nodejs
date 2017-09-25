@@ -1,22 +1,30 @@
 class Service {
   order (order = 'order') {
-    console.log(this.content)
     return this
   }
-
+  // Todo: find a way to just populate this to the list method maybe split stuff in extra classes
   count (count) {
-    this.content.body = Object.assign({}, { count })
+    this.content.body = Object.assign(this.content.body, { count })
+
     return this
   }
 
-  offset (offset) {}
-  filter (filter) {
-    // Todo: i think we need to map filters with underscore(_)
-    // this.content.body = Object.assign({}, { filter })
+  skip (offset) {
+    this.content.body = Object.assign(this.content.body, { offset })
+
+    return this
+  }
+  // just an alias for skip
+  offset (offset) {
+    this.content.body = Object.assign(this.content.body, { offset })
+
+    return this
   }
 
-  fetch () {
-    return this.service.http.get(this.content)
+  filter (filter) {
+    //  const filters = ['desc', 'asc']
+
+    return this
   }
 }
 

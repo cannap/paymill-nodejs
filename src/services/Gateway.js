@@ -48,11 +48,13 @@ class CreateRest extends Service {
         }
         return this.service.http.get(this.content)
       },
-
       details (id) {
         return this.service.http.get({ url: `${this.endpoint}/${id}` })
       }
     }
+  }
+  fetch () {
+    return this.service.http.get(this.content)
   }
 }
 
