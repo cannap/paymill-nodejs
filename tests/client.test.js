@@ -53,14 +53,14 @@ test('delete', async t => {
 })
 
 test('export as csv', async t => {
-  const exportedClient = await gateway.clients.list(true)
+  const exportedClient = await gateway.clients.list(true).fetch()
   var isCsv = !!detect(exportedClient)
   console.log(isCsv)
   t.is(isCsv, true)
 })
 
 test('list as object', async t => {
-  const exportedClient = await gateway.clients.list()
+  const exportedClient = await gateway.clients.list().fetch()
   t.is(typeof exportedClient, 'object')
 })
 //

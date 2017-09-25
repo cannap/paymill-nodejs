@@ -1,10 +1,13 @@
 var TypedError = require('error/typed')
 
+// Todo: extend class Error instead
+
 let ApiServerError = TypedError({
   type: 'API Server Error',
   message: '{title} server error, status={statusCode}',
   title: null,
-  statusCode: null
+  statusCode: null,
+  error: null
 })
 
 module.exports.BadRequest = ApiServerError({

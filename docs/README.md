@@ -136,7 +136,7 @@ List Clients
 | csv | Boolean |
 
 ```js
- const updatedClient = await gateway.clients.list(csv = false)
+ const updatedClient = await gateway.clients.list(csv = false).fetch()
 ```
 
 

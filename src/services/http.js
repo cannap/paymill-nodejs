@@ -78,9 +78,8 @@ class Http {
 
   _request (method, request) {
     var jsonOutput = true
-
+    // Todo find a beter solution
     var tempHeader = Object.assign({}, this.headers)
-
     tempHeader = Object.assign(tempHeader, request.headers)
 
     if (typeof request.json !== 'undefined') {
@@ -89,12 +88,16 @@ class Http {
     }
 
     const requestBody = qs.stringify(request.body, { encode: false })
+
     const options = {
       headers: tempHeader,
       method,
       port: 443,
       host: this.config.host,
-      path: `/${this.config.version}/${request.url}`
+      path: `/${this.config.version}/${request.url}/?${method === 'GET' &&
+      request.body
+        ? requestBody
+        : ''}`
     }
 
     if (request.body) {
@@ -117,6 +120,7 @@ class Http {
           } else {
             finalResponse = buffer.toString('utf-8')
           }
+
           const error = this.httpStatusCheck(statusCode)
           if (error) {
             reject(error)

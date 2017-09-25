@@ -15,7 +15,7 @@ test('get', async t => {
     const result = await http.get({ url: 'clients' })
     t.regex(result[0]['id'], /client/)
   } catch (error) {
-    t.fail('cant load resposne')
+    t.fail('cant load response')
   }
 })
 

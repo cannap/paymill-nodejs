@@ -1,8 +1,22 @@
 class Service {
-  filter () {
+  order (order = 'order') {
     console.log(this.content)
-    this.content.amount = 200
     return this
+  }
+
+  count (count) {
+    this.content.body = Object.assign({}, { count })
+    return this
+  }
+
+  offset (offset) {}
+  filter (filter) {
+    // Todo: i think we need to map filters with underscore(_)
+    // this.content.body = Object.assign({}, { filter })
+  }
+
+  fetch () {
+    return this.service.http.get(this.content)
   }
 }
 

@@ -1,4 +1,11 @@
-class CreateRest {
+const Service = require('./Service')
+
+class CreateRest extends Service {
+  constructor () {
+    super()
+    this.content = {}
+  }
+
   createGateway (operations) {
     operations.forEach(property => {
       this[property] = this.restEndpoints[property]
@@ -28,9 +35,20 @@ class CreateRest {
           body: {},
           headers: { Accept: csv ? 'text/csv' : '*' }
         }
+        return this
+        // return this.service.http.get(this.content)
+      },
 
+      listAll (csv = false) {
+        this.content = {
+          url: this.endpoint,
+          json: !csv,
+          body: {},
+          headers: { Accept: csv ? 'text/csv' : '*' }
+        }
         return this.service.http.get(this.content)
       },
+
       details (id) {
         return this.service.http.get({ url: `${this.endpoint}/${id}` })
       }

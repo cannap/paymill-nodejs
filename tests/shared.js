@@ -44,3 +44,7 @@ module.exports.transactionWithBilling = {
     country: 'DE'
   }
 }
+
+module.exports.isArray = function (arr) {
+  return Object.prototype.toString.call(arr) === '[object Array]'
+}

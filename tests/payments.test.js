@@ -1,5 +1,5 @@
 import test from 'ava'
-import { gateway } from './shared'
+import { gateway, isArray } from './shared'
 import { createToken } from './shared'
 var detect = require('detect-csv')
 test('create', async t => {
@@ -8,7 +8,6 @@ test('create', async t => {
   const regex = /uniqueId":"(.+)"},"account"/gm
   var match = regex.exec(body)
   const token = match[1]
-  console.log(token)
   const payment = await gateway.payments.create({
     token
   })
@@ -16,17 +15,12 @@ test('create', async t => {
 })
 
 test('details as object', async t => {
-  const payments = await gateway.payments.list()
-
+  const payments = await gateway.payments.list().fetch()
   t.is(isArray(payments), true)
 })
 
 test('details as csv', async t => {
-  const payments = await gateway.payments.list(true)
+  const payments = await gateway.payments.list(true).fetch()
   const isCsv = !!detect(payments)
   t.is(isCsv, true)
 })
-
-function isArray (o) {
-  return Object.prototype.toString.call(o) === '[object Array]'
-}
