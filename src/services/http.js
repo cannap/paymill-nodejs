@@ -78,14 +78,19 @@ class Http {
 
   _request (method, request) {
     var jsonOutput = true
+
+    var tempHeader = Object.assign({}, this.headers)
+
+    tempHeader = Object.assign(tempHeader, request.headers)
+
     if (typeof request.json !== 'undefined') {
       jsonOutput = request.json
-      delete this.headers['Content-Type']
+      delete tempHeader['Content-Type']
     }
 
     const requestBody = qs.stringify(request.body, { encode: false })
     const options = {
-      headers: this.headers,
+      headers: tempHeader,
       method,
       port: 443,
       host: this.config.host,

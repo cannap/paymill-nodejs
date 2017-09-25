@@ -2,6 +2,7 @@
 import test from 'ava'
 import { gateway } from './shared'
 import Chance from 'chance'
+var detect = require('detect-csv')
 const chance = new Chance()
 
 test('create', async t => {
@@ -53,7 +54,9 @@ test('delete', async t => {
 
 test('export as csv', async t => {
   const exportedClient = await gateway.clients.list(true)
-  t.is(typeof exportedClient, 'string')
+  var isCsv = !!detect(exportedClient)
+  console.log(isCsv)
+  t.is(isCsv, true)
 })
 
 test('list as object', async t => {

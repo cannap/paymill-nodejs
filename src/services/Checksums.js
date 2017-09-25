@@ -40,7 +40,7 @@ class Checksums extends Service {
     })
   }
 
-  list (content) {
+  /* list (content) {
     // This function can have a filter option
     // It would be called like
     // instance.checksums.list('what i want').filter() // but how?
@@ -48,6 +48,6 @@ class Checksums extends Service {
       url: 'checksums',
       body: this.content
     })
-  } //
+  } // */
 }
 module.exports = Checksums

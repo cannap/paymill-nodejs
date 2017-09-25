@@ -22,6 +22,7 @@
   "devDependencies": {
     "ava": "^0.22.0",
     "chance": "^1.0.11",
+    "detect-csv": "^1.1.0",
     "es6-promise": "^4.1.1",
     "got": "^7.1.0",
     "nodemon": "^1.12.1",
