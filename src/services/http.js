@@ -18,7 +18,7 @@ class Http {
       case '400':
         return new HttpError(400, 'Bad Request', message)
       case '401':
-        return new HttpError(401, 'Transaction Error')
+        return new HttpError(401, 'Unauthorized')
       case '403':
         return new HttpError(402, 'Transaction Error')
       case '404':
@@ -26,7 +26,7 @@ class Http {
       case '412':
         return new HttpError(412, message)
       case '512':
-        return new UnexpectedError(500, 'Internal Server Error', message)
+        return new UnexpectedError(512, 'Internal Server Error', message)
     }
   }
 
@@ -136,7 +136,6 @@ class Http {
             }
 
             finalResponse = null
-            //
             reject(errorFromResponse)
           }
 
