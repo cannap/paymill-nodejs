@@ -20,10 +20,11 @@
     "qs": "^6.5.1"
   },
   "devDependencies": {
-    "global-request-logger": "^0.1.1",
     "ava": "^0.22.0",
     "chance": "^1.0.11",
     "detect-csv": "^1.1.0",
+    "docute": "^3.4.9",
+    "global-request-logger": "^0.1.1",
     "got": "^7.1.0",
     "nodemon": "^1.12.1",
     "npm-run": "^4.1.2",
