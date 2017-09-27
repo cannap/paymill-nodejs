@@ -54,8 +54,7 @@ test('delete', async t => {
 
 test('export as csv', async t => {
   const exportedClient = await gateway.clients.list(true).fetch()
-  var isCsv = !!detect(exportedClient)
-  console.log(isCsv)
+  const isCsv = !!detect(exportedClient)
   t.is(isCsv, true)
 })
 

@@ -63,6 +63,6 @@ test('put', async t => {
 })
 
 test('HTTP ERROR', t => {
-  const error = http.httpStatusCheck(404)
+  const error = http._httpStatusCheck(404)
   t.is(error.status, 404)
 })

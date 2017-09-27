@@ -4,7 +4,9 @@ const createThrottle = require('async-throttle')
 class CreateRest extends Service {
   constructor () {
     super()
-    this.content = {}
+    this.content = {
+      body: { wtf: 'fwef' }
+    }
   }
 
   _createGateway (operations) {
@@ -39,24 +41,28 @@ class CreateRest extends Service {
         return this
         // return this.service.http.get(this.content)
       },
+      /**
+       *
+       * @param {Integer}
+       *
+       */
       details (id) {
         return this.service.http.get({ url: `${this.endpoint}/${id}` })
       }
     }
   }
-  fetch () {
-    return this.service.http.get(this.content)
-  }
+
   /**
    *  Create many
-   * @param {Array} contents
+   * @param {Array} contents - Array with Ids
+   * @param {Integer} - throttleLimit Limit how much requests at the same time
+   * @return {Array} - with the created data
    */
-
   createMany (contents, throttleLimit = 2) {
     const throttle = createThrottle(throttleLimit)
     return Promise.all(
       contents.map(content =>
-        throttle(async () => {
+        throttle(() => {
           return this.create(content)
         })
       )
@@ -67,17 +73,24 @@ class CreateRest extends Service {
    *  Delete many
    * @param {Array} ids
    * @param {Integer} throttleLimit Limit how much requests at the same time
+   * @return {Array} - every delete item returns "null"
    */
   removeMany (ids, throttleLimit = 2) {
     const throttle = createThrottle(throttleLimit)
-
     return Promise.all(
       ids.map(id =>
-        throttle(async () => {
+        throttle(() => {
           return this.remove(id)
         })
       )
     )
+  }
+
+  /**
+   * Starts the requests
+   */
+  fetch (save = false) {
+    return this.service.http.get(this.content)
   }
 }
 

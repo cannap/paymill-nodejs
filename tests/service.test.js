@@ -1,5 +1,6 @@
 import test from 'ava'
 import { gateway } from './shared'
+import Service from '../src/services/Service'
 import Chance from 'chance'
 const chance = new Chance()
 
@@ -41,8 +42,18 @@ test('remove many, async', async t => {
     results.map(result => result.id),
     4
   )
-
   t.is(deleted.length, howMany)
+})
+
+test('body obj should have offset prop', t => {
+  // console.log(service())
+  const offset = gateway.clients.list().offset(3)
+  t.true(offset.content.body.hasOwnProperty('offset'), true)
+})
+
+test('body obj should have count prop', t => {
+  const offset = gateway.clients.list().count(5)
+  t.true(offset.content.body.hasOwnProperty('count'), true)
 })
 
 /* test('offset with skip', async t => {

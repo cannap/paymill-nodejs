@@ -13,7 +13,7 @@ class Http {
     }
   }
 
-  httpStatusCheck (status, message) {
+  _httpStatusCheck (status, message) {
     switch (status.toString()) {
       case '400':
         return new HttpError(400, 'Bad Request', message)
@@ -35,7 +35,7 @@ class Http {
    * @param {Object} request -  Request Object
    * @param {String} request.url Request URL
    * @param {Object} request.body Request body
-   * @param {Boolean} json Request body
+   * @param {Boolean}request.json - body
    * @param {Object} headers
    */
   post (request, headers) {
@@ -44,9 +44,9 @@ class Http {
   /**
    *
    * @param {Object} request -  Request Object
-   * @param {String} request.url Request URL
-   * @param {Object} request.body Request body
-   * @param {Boolean} json Request body
+   * @param {String} request.url - Request URL
+   * @param {Object} request.body - Request body
+   * @param {Boolean}request.json - body
    * @param {Object} headers
    */
   get (request, headers) {
@@ -124,12 +124,12 @@ class Http {
           }
           if (statusCode !== 200 || errorFromResponse) {
             try {
-              errorFromResponse = this.httpStatusCheck(
+              errorFromResponse = this._httpStatusCheck(
                 statusCode,
                 JSON.parse(buffer.toString('utf-8'))
               )
             } catch (error) {
-              errorFromResponse = this.httpStatusCheck(
+              errorFromResponse = this._httpStatusCheck(
                 statusCode,
                 buffer.toString('utf-8')
               )
@@ -137,6 +137,7 @@ class Http {
 
             finalResponse = null
             reject(errorFromResponse)
+            return
           }
 
           resolve(finalResponse)
