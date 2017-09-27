@@ -47,26 +47,19 @@ class CreateRest extends Service {
   fetch () {
     return this.service.http.get(this.content)
   }
-
-  listAll (csv = false) {
-    this.content = {
-      url: this.endpoint,
-      json: !csv,
-      body: {},
-      headers: { Accept: csv ? 'text/csv' : '*' }
-    }
-    return this.service.http.get(this.content)
-  }
-
   /**
    *  Create many
    * @param {Array} contents
    */
-  createMany (contents) {
+
+  createMany (contents, throttleLimit = 2) {
+    const throttle = createThrottle(throttleLimit)
     return Promise.all(
-      contents.map(content => {
-        return this.create(content)
-      })
+      contents.map(content =>
+        throttle(async () => {
+          return this.create(content)
+        })
+      )
     )
   }
 
@@ -75,7 +68,7 @@ class CreateRest extends Service {
    * @param {Array} ids
    * @param {Integer} throttleLimit Limit how much requests at the same time
    */
-  async removeMany (ids, throttleLimit = 2) {
+  removeMany (ids, throttleLimit = 2) {
     const throttle = createThrottle(throttleLimit)
 
     return Promise.all(
