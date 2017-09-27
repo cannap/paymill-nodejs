@@ -13,6 +13,7 @@ const http = new Http(defaultConfig)
 test('get', async t => {
   try {
     const result = await http.get({ url: 'clients' })
+    t.log(result)
     t.regex(result[0]['id'], /client/)
   } catch (error) {
     t.fail('cant load response')
@@ -63,7 +64,7 @@ test('put', async t => {
 })
 
 test('HTTP ERROR', t => {
-  // Todo: no idea how to check t.throws
   const error = http.httpStatusCheck(404)
-  t.regex(error.message, /Not Found/)
+
+  t.is(error.status, 404)
 })

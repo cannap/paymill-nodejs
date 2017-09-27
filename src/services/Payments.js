@@ -4,8 +4,8 @@ class Payments extends Gateway {
     super()
     this.service = service
     this.endpoint = 'payments'
-    const gateways = ['create', 'list', 'update', 'details']
-    this.createGateway(gateways)
+    const gateways = ['create', 'list', 'update', 'details', 'remove']
+    this._createGateway(gateways)
   }
 }
 

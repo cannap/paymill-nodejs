@@ -2,7 +2,7 @@ const client = require('https')
 const qs = require('qs')
 const generateAuthString = require('../utils').generateAuthString
 const Buffer = require('buffer').Buffer
-const errors = require('./Errors')
+const { UnexpectedError, HttpError } = require('./Errors')
 // Todo: timeout
 class Http {
   constructor (config) {
@@ -13,21 +13,20 @@ class Http {
     }
   }
 
-  httpStatusCheck (status) {
-    // Todo: when growing move in other file and add fucking response
+  httpStatusCheck (status, message) {
     switch (status.toString()) {
       case '400':
-        return errors.BadRequest
+        return new HttpError(400, 'Bad Request', message)
       case '401':
-        return errors.Unauthorized
+        return new HttpError(401, 'Transaction Error')
       case '403':
-        return errors.TransactionError
+        return new HttpError(402, 'Transaction Error')
       case '404':
-        return errors.NotFound
+        return new HttpError(404, 'Not Found')
       case '412':
-        return errors.PreconditionFailed
+        return new HttpError(412, message)
       case '512':
-        return errors.UnexpectedError
+        return new UnexpectedError(500, 'Internal Server Error', message)
     }
   }
 
@@ -104,6 +103,7 @@ class Http {
       options['Content-Length'] = Buffer.byteLength(requestBody).toString()
     }
     return new Promise((resolve, reject) => {
+      var errorFromResponse = false
       const theRequest = client.request(options, response => {
         let chunks = []
         response.on('data', responseBody => {
@@ -116,15 +116,30 @@ class Http {
           if (jsonOutput) {
             try {
               finalResponse = JSON.parse(buffer.toString('utf-8')).data
-            } catch (err) {}
+            } catch (err) {
+              errorFromResponse = new UnexpectedError('Invalid JSON format')
+            }
           } else {
             finalResponse = buffer.toString('utf-8')
           }
+          if (statusCode !== 200 || errorFromResponse) {
+            try {
+              errorFromResponse = this.httpStatusCheck(
+                statusCode,
+                JSON.parse(buffer.toString('utf-8'))
+              )
+            } catch (error) {
+              errorFromResponse = this.httpStatusCheck(
+                statusCode,
+                buffer.toString('utf-8')
+              )
+            }
 
-          const error = this.httpStatusCheck(statusCode)
-          if (error) {
-            reject(error)
+            finalResponse = null
+            //
+            reject(errorFromResponse)
           }
+
           resolve(finalResponse)
         })
 

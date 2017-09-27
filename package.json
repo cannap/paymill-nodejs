@@ -8,7 +8,6 @@
     "play": "nodemon play/play.js",
     "test:watch": "ava tests/*.test.js --verbose --watch",
     "ava": "ava --verbose",
-    "generateToken": "node tests/bridge/index.js",
     "test": "nyc ava tests/*.test.js --verbose",
     "docs": "docute ./docs"
   },
@@ -16,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async-throttle": "^1.1.0",
     "error": "^7.0.2",
     "qs": "^6.5.1"
   },
@@ -24,7 +24,6 @@
     "ava": "^0.22.0",
     "chance": "^1.0.11",
     "detect-csv": "^1.1.0",
-    "es6-promise": "^4.1.1",
     "got": "^7.1.0",
     "nodemon": "^1.12.1",
     "npm-run": "^4.1.2",

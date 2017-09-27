@@ -1,41 +1,23 @@
-var TypedError = require('error/typed')
+class UnexpectedError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = this.constructor.name
+    // Error.captureStackTrace(this, this.constructor)
+    this.message = message
+  }
+}
 
-// Todo: extend class Error instead
+class HttpError extends Error {
+  constructor (status, message) {
+    super(message)
+    this.name = this.constructor.name
+    // Error.captureStackTrace(this, this.constructor)
+    this.status = status
+    this.message = message
+  }
+}
 
-let ApiServerError = TypedError({
-  type: 'API Server Error',
-  message: '{title} server error, status={statusCode}',
-  title: null,
-  statusCode: null,
-  error: null
-})
-
-module.exports.BadRequest = ApiServerError({
-  title: 'Bad Request',
-  statusCode: 400
-})
-
-module.exports.Unauthorized = ApiServerError({
-  title: 'Unauthorized',
-  statusCode: 401
-})
-
-module.exports.TransactionError = ApiServerError({
-  title: 'Transaction Error',
-  statusCode: 403
-})
-
-module.exports.NotFound = ApiServerError({
-  title: 'Not Found',
-  statusCode: 404
-})
-
-module.exports.PreconditionFailed = ApiServerError({
-  title: 'Precondition Failed',
-  statusCode: 412
-})
-
-module.exports.UnexpectedError = ApiServerError({
-  title: 'Internal Server Error',
-  statusCode: 512
-})
+module.exports = {
+  HttpError,
+  UnexpectedError
+}

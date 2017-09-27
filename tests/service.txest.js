@@ -13,7 +13,24 @@ test('should return 10', async t => {
   t.is(clients.length, 10)
 }) */
 
-test('offset(skip)', t => {
+test('createMany clients', async t => {
+  const howMany = chance.integer({ min: 3, max: 10 })
+  const clients = []
+  for (let i = 0; i < howMany; i++) {
+    clients.push({
+      email: chance.email(),
+      description: chance.sentence()
+    })
+  }
+
+  const result = await gateway.clients.createMany(clients)
+
+  t.is(result.length, howMany)
+})
+
+test('offset with skip', async t => {
+  t.is(true, true)
+
   // dont know how when json returns limited by 20 and csv gives a fuck
 
   /*
@@ -24,32 +41,5 @@ test('offset(skip)', t => {
     5. or something
   */
 
-  var promises = []
-  for (let i = 0; i < 12; i++) {
-    promises.push(
-      gateway.clients.create({
-        description: 'yo',
-        email: chance.email()
-      })
-    )
-  }
-
-  // promises.map(function())
-
-  Promise.all(promises)
-    .then(res => {
-      console.log(promises.length)
-    })
-    .catch(er => {
-      t.log(promises)
-    })
-
   // const total = await gateway.clients.list(true).count(2).skip(2).fetch()
-  /*
-//client_69e86f52f89a0ce3ae52
-
-//client_f5d5e2a1a7962b06e48a
-  */
-  /* console.log(total)
-  console.log(total.length) */
 })

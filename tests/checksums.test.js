@@ -65,6 +65,6 @@ test('create error with missing field', async t => {
     await gateway.checksums.create(test)
     t.fail()
   } catch (error) {
-    t.regex(error.title, /Precondition/)
+    t.is(error.status, 412)
   }
 })
