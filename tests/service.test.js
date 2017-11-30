@@ -1,6 +1,5 @@
 import test from 'ava'
 import { gateway } from './shared'
-import Service from '../src/services/Service'
 import Chance from 'chance'
 const chance = new Chance()
 

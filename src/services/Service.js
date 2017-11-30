@@ -10,10 +10,13 @@ class Service {
     this.content.body = Object.assign(this.content.body, { offset })
     return this
   }
-  // just an alias for skip
+
+  /**
+   *  Skips items
+   * @param {Number} offset
+   */
   offset (offset) {
-    this.content.body = Object.assign(this.content.body, { offset })
-    return this
+    return this.skip(offset)
   }
   /*
   filter (filter) {

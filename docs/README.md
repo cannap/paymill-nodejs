@@ -19,7 +19,7 @@ const pm = paymill.init({
 [**Official API Reference**](https://developers.paymill.com/API/index#checksums)
 </p>
 
-### Create
+#### Create
 Creates a new Checksum
 
 | Param                | Type   |
@@ -37,7 +37,8 @@ const result = await pm.checksums.create({
   cancel_url: 'https://www.example.com/store/checkout/retry')
 })
 ```
-**Paypal**
+##### Paypal
+
 Creates a Paypal Checksum
 <p class="warning">
 [Paypal Guide](https://developers.paymill.com/guides/paypal/how-to-set-up-paypal.html)
@@ -52,8 +53,8 @@ const result = await pm.checksums.create({
   cancel_url: 'https://www.example.com/store/checkout/retry')
 }).forPaypal()
 ```
+##### Sofort
 
-**Sofort**
 Create a Sofort Checksum
 <p class="warning">
 [Sofort Guide](https://developers.paymill.com/guides/sofort/transactions)
@@ -81,7 +82,7 @@ const result = await pm.checksums.create({
 [**Official API Reference**](https://developers.paymill.com/API/index?bash#-client-object)
 </p>
 
-### Create 
+#### Create 
 Create a new Client
 
 ```js
@@ -90,7 +91,7 @@ const client = await gateway.clients.create({
     description: 'Some description'
 })
 ```
-### Details
+#### Details
 Get details from a Single Client
 
 | Param    | Type   |
@@ -102,7 +103,7 @@ Get details from a Single Client
 ```
 
 
-### Update
+#### Update
 Update a Single Client
 
 | Param    | Type   |
@@ -116,7 +117,7 @@ Update a Single Client
   })
 ```
 
-### Delete
+#### Delete
 Delete a Single Client
 
 | Param    | Type   |
@@ -128,7 +129,7 @@ Delete a Single Client
 ```
 
 
-### List
+#### List
 List Clients
 
 | Param    | Type   |

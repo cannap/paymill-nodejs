@@ -9,7 +9,7 @@
     "test:watch": "ava tests/*.test.js --verbose --watch",
     "ava": "ava --verbose",
     "test": "nyc ava tests/*.test.js --verbose",
-    "docs": "docute ./docs"
+    "docs": "docute ./docs --port 3939"
   },
   "keywords": [],
   "author": "",

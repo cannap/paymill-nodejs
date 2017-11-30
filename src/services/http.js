@@ -23,7 +23,7 @@ class Http {
         return new HttpError(402, 'Transaction Error')
       case '404':
         return new HttpError(404, 'Not Found')
-      case '412':
+      case '412': // Preconditional error
         return new HttpError(412, message)
       case '512':
         return new UnexpectedError(512, 'Internal Server Error', message)
@@ -77,7 +77,7 @@ class Http {
 
   _request (method, request) {
     var jsonOutput = true
-    // Todo find a beter solution
+    // TODO: find a beter solution
     var tempHeader = Object.assign({}, this.headers)
     tempHeader = Object.assign(tempHeader, request.headers)
 
@@ -122,7 +122,7 @@ class Http {
           } else {
             finalResponse = buffer.toString('utf-8')
           }
-          if (statusCode !== 200 || errorFromResponse) {
+          if (statusCode !== 200 || errorFromResponse) { //Todo: check that for 2xxx errors
             try {
               errorFromResponse = this._httpStatusCheck(
                 statusCode,

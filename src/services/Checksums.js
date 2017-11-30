@@ -32,22 +32,12 @@ class Checksums extends Service {
             body: content
           })
         }
-      } //
+      }
     }
     return this.service.http.post({
       url: 'checksums',
       body: content
     })
   }
-
-  /* list (content) {
-    // This function can have a filter option
-    // It would be called like
-    // instance.checksums.list('what i want').filter() // but how?
-    return this.service.http.put({
-      url: 'checksums',
-      body: this.content
-    })
-  } // */
 }
 module.exports = Checksums

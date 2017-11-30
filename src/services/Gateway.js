@@ -5,7 +5,7 @@ class CreateRest extends Service {
   constructor () {
     super()
     this.content = {
-      body: { wtf: 'fwef' }
+      body: {}
     }
   }
 
@@ -87,7 +87,8 @@ class CreateRest extends Service {
   }
 
   /**
-   * Starts the requests
+   * Starts the request
+   * @returns  {Promise}
    */
   fetch (save = false) {
     return this.service.http.get(this.content)
